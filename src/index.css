@@ -35,7 +35,17 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  /* Stop global scroll */
+  /* Stop global scroll on desktop */
+}
+
+@media (max-width: 1024px) {
+
+  html,
+  body,
+  #root {
+    height: auto;
+    overflow: auto;
+  }
 }
 
 body {
