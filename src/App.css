@@ -702,3 +702,70 @@
   background: white;
   text-align-last: center;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .app-title {
+    font-size: 1.25rem;
+  }
+
+  /* Hide button text on mobile, keep icon */
+  .header-actions .btn-secondary {
+    font-size: 0;
+    padding: 0.5rem;
+    gap: 0;
+  }
+  .header-actions .btn-secondary svg {
+    margin-right: 0;
+  }
+
+  .main-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  /* Grids */
+  .rate-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .education-grid {
+    /* Make scrollable horizontally */
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .edu-col {
+    min-width: 70px; /* Ensure columns don't shrink too much */
+  }
+
+  /* Income & Forms */
+  .income-sub-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .age-inputs {
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Pair Loan Config */
+  .input-wrapper-sm {
+    flex-wrap: wrap;
+  }
+}
