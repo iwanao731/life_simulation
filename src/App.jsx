@@ -141,8 +141,6 @@ function App() {
       property,
       initialExpenses,
       expenses,
-      initialExpenses,
-      expenses,
       isPairLoan,
       pairLoanConfig,
       income,
