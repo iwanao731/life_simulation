@@ -118,7 +118,7 @@ export function MortgageForm({
             <div style={{ flex: 1 }}>
               <label className="lbl-xs">価格 (実勢)</label>
               <div className="input-wrapper-sm">
-                <input type="number" value={property?.landPrice || 0}
+                <input type="number" value={property?.landPrice || ''}
                   onChange={e => setProperty(prev => ({ ...prev, landPrice: Number(e.target.value) }))}
                   className="input-sm" style={{ width: '100%' }} />
                 <span className="unit-xs">万円</span>
@@ -127,7 +127,7 @@ export function MortgageForm({
             <div style={{ flex: 1 }}>
               <label className="lbl-xs">面積</label>
               <div className="input-wrapper-sm">
-                <input type="number" value={property?.landArea || 0}
+                <input type="number" value={property?.landArea || ''}
                   onChange={e => setProperty(prev => ({ ...prev, landArea: Number(e.target.value) }))}
                   className="input-sm" style={{ width: '100%' }} />
                 <span className="unit-xs">m²</span>
@@ -152,7 +152,7 @@ export function MortgageForm({
             <div style={{ flex: 1 }}>
               <label className="lbl-xs">価格 (税抜・請負)</label>
               <div className="input-wrapper-sm">
-                <input type="number" value={property?.buildingPrice || 0}
+                <input type="number" value={property?.buildingPrice || ''}
                   onChange={e => setProperty(prev => ({ ...prev, buildingPrice: Number(e.target.value) }))}
                   className="input-sm" style={{ width: '100%' }} />
                 <span className="unit-xs">万円</span>
@@ -161,7 +161,7 @@ export function MortgageForm({
             <div style={{ flex: 1 }}>
               <label className="lbl-xs">延床面積</label>
               <div className="input-wrapper-sm">
-                <input type="number" value={property?.buildingArea || 0}
+                <input type="number" value={property?.buildingArea || ''}
                   onChange={e => setProperty(prev => ({ ...prev, buildingArea: Number(e.target.value) }))}
                   className="input-sm" style={{ width: '100%' }} />
                 <span className="unit-xs">m²</span>
@@ -258,7 +258,7 @@ export function MortgageForm({
           ) : (
             <div className="input-wrapper-sm">
               <input type="number"
-                value={property?.fixedAssetTax?.manualAmount || 0}
+                value={property?.fixedAssetTax?.manualAmount || ''}
                 onChange={e => setProperty(prev => ({ ...prev, fixedAssetTax: { ...prev.fixedAssetTax, manualAmount: Number(e.target.value) } }))}
                 className="input-sm" style={{ width: '100%' }} />
               <span className="unit-xs">万円/年</span>
@@ -278,13 +278,14 @@ export function MortgageForm({
           <div className="input-wrapper">
             <input
               type="number"
-              value={property?.price || 0}
+              value={property?.price || ''}
               onChange={(e) => {
                 const val = Number(e.target.value);
                 setProperty(prev => ({ ...prev, price: val }));
                 setAmount(Math.max(0, val - (property.deposit || 0) - (property.downPayment || 0)));
               }}
               className="input-premium"
+              onFocus={e => e.target.select()}
             />
             <span className="unit">万円</span>
           </div>
@@ -296,7 +297,7 @@ export function MortgageForm({
             <div className="input-wrapper-sm">
               <input
                 type="number"
-                value={property?.deposit || 0}
+                value={property?.deposit || ''}
                 onChange={(e) => {
                   const val = Number(e.target.value);
                   setProperty(prev => ({ ...prev, deposit: val }));
@@ -312,7 +313,7 @@ export function MortgageForm({
             <div className="input-wrapper-sm">
               <input
                 type="number"
-                value={property?.downPayment || 0}
+                value={property?.downPayment || ''}
                 onChange={(e) => {
                   const val = Number(e.target.value);
                   setProperty(prev => ({ ...prev, downPayment: val }));
@@ -330,10 +331,11 @@ export function MortgageForm({
           <div className="input-wrapper">
             <input
               type="number"
-              value={amount || 0}
+              value={amount || ''}
               onChange={(e) => setAmount(Number(e.target.value))}
               className="input-premium"
               style={{ borderColor: '#3b82f6', background: '#eff6ff' }}
+              onFocus={e => e.target.select()}
             />
             <span className="unit">万円</span>
           </div>
@@ -411,6 +413,7 @@ export function MortgageForm({
                 value={bonusPrincipal || ''}
                 onChange={(e) => setBonusPrincipal(Number(e.target.value))}
                 className="input-premium"
+                onFocus={e => e.target.select()}
               />
               <span className="unit">万円</span>
             </div>
@@ -462,7 +465,7 @@ export function MortgageForm({
                 onChange={e => updateInitialExpense(item.id, 'name', e.target.value)}
                 className="input-sm" style={{ flex: 2 }} />
               <div className="input-wrapper-sm" style={{ flex: 1 }}>
-                <input type="number" value={item.amount}
+                <input type="number" value={item.amount || ''}
                   onChange={e => updateInitialExpense(item.id, 'amount', Number(e.target.value))}
                   className="input-sm" style={{ width: '100%' }} />
                 <span className="unit-xs">万円</span>
@@ -521,7 +524,7 @@ export function ExpenseForm({ expenses, setExpenses }) {
             <div className="input-wrapper-xs">
               <input
                 type="number"
-                value={item.amount}
+                value={item.amount || ''}
                 onChange={(e) => updateExpense(item.id, 'amount', Number(e.target.value))}
                 className="input-sm amount-input"
               />
@@ -657,7 +660,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
 
               {income.main.hasSideBusiness && (
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginLeft: '4px' }}>
-                  <label className="lbl-xs">年額<input type="number" value={income.main.sideBusiness?.annual || 0} onChange={e => {
+                  <label className="lbl-xs">年額<input type="number" value={income.main.sideBusiness?.annual || ''} onChange={e => {
                     const val = Number(e.target.value);
                     setIncome(prev => ({ ...prev, main: { ...prev.main, sideBusiness: { ...prev.main.sideBusiness, annual: val } } }));
                   }} className="input-xs" style={{ width: '6rem' }} />万円</label>
@@ -681,6 +684,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
               value={income.main.salary || ''}
               onChange={(e) => updateIncome('main', 'salary', e.target.value)}
               className="input-premium"
+              onFocus={e => e.target.select()}
             />
             <span className="unit">万円</span>
           </div>
@@ -695,6 +699,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
               value={income.main.bonus || ''}
               onChange={(e) => updateIncome('main', 'bonus', e.target.value)}
               className="input-premium"
+              onFocus={e => e.target.select()}
             />
             <span className="unit">万円</span>
           </div>
@@ -706,6 +711,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
               value={income.main.salaryIncrease || 0}
               onChange={(e) => updateIncome('main', 'salaryIncrease', Number(e.target.value))}
               className="input-premium"
+              onFocus={e => e.target.select()}
             />
             <span className="unit">%</span>
           </div>
@@ -745,7 +751,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                   <label className="lbl-xs" style={{ display: 'block', marginBottom: '0.25rem' }}>退職金 (額面)</label>
                   <div className="input-wrapper-sm">
                     <input type="number"
-                      value={income.main.retirementAllowance || 0}
+                      value={income.main.retirementAllowance || ''}
                       onChange={e => setIncome(prev => ({ ...prev, main: { ...prev.main, retirementAllowance: Number(e.target.value) } }))}
                       className="input-sm" style={{ width: '100%' }} />
                     <span className="unit-xs">万円</span>
@@ -805,7 +811,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                         <label className="lbl-xs" style={{ display: 'block', marginBottom: '0.25rem' }}>月額 (手取)</label>
                         <div className="input-wrapper-sm">
                           <input type="number"
-                            value={income.main.pension?.monthly || 0}
+                            value={income.main.pension?.monthly || ''}
                             onChange={e => setIncome(prev => ({ ...prev, main: { ...prev.main, pension: { ...prev.main.pension, monthly: Number(e.target.value) } } }))}
                             className="input-sm" style={{ width: '100%' }} />
                           <span className="unit-xs">万円</span>
@@ -938,7 +944,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
 
                 {income.partner.hasSideBusiness && (
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginLeft: '4px' }}>
-                    <label className="lbl-xs">年額<input type="number" value={income.partner.sideBusiness?.annual || 0} onChange={e => {
+                    <label className="lbl-xs">年額<input type="number" value={income.partner.sideBusiness?.annual || ''} onChange={e => {
                       const val = Number(e.target.value);
                       setIncome(prev => ({ ...prev, partner: { ...prev.partner, sideBusiness: { ...prev.partner.sideBusiness, annual: val } } }));
                     }} className="input-xs" style={{ width: '6rem' }} />万円</label>
@@ -963,6 +969,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                 value={income.partner.salary || ''}
                 onChange={(e) => updateIncome('partner', 'salary', e.target.value)}
                 className="input-premium"
+                onFocus={e => e.target.select()}
               />
               <span className="unit">万円</span>
             </div>
@@ -977,6 +984,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                 value={income.partner.bonus || ''}
                 onChange={(e) => updateIncome('partner', 'bonus', e.target.value)}
                 className="input-premium"
+                onFocus={e => e.target.select()}
               />
               <span className="unit">万円</span>
             </div>
@@ -988,6 +996,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                 value={income.partner.salaryIncrease || 0}
                 onChange={(e) => updateIncome('partner', 'salaryIncrease', Number(e.target.value))}
                 className="input-premium"
+                onFocus={e => e.target.select()}
               />
               <span className="unit">%</span>
             </div>
@@ -1027,7 +1036,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                     <label className="lbl-xs" style={{ display: 'block', marginBottom: '0.25rem' }}>退職金 (額面)</label>
                     <div className="input-wrapper-sm">
                       <input type="number"
-                        value={income.partner.retirementAllowance || 0}
+                        value={income.partner.retirementAllowance || ''}
                         onChange={e => setIncome(prev => ({ ...prev, partner: { ...prev.partner, retirementAllowance: Number(e.target.value) } }))}
                         className="input-sm" style={{ width: '100%' }} />
                       <span className="unit-xs">万円</span>
@@ -1087,7 +1096,7 @@ export function IncomeForm({ income, setIncome, isPairLoan, setIsPairLoan }) {
                           <label className="lbl-xs" style={{ display: 'block', marginBottom: '0.25rem' }}>月額 (手取)</label>
                           <div className="input-wrapper-sm">
                             <input type="number"
-                              value={income.partner.pension?.monthly || 0}
+                              value={income.partner.pension?.monthly || ''}
                               onChange={e => setIncome(prev => ({ ...prev, partner: { ...prev.partner, pension: { ...prev.partner.pension, monthly: Number(e.target.value) } } }))}
                               className="input-sm" style={{ width: '100%' }} />
                             <span className="unit-xs">万円</span>
@@ -1236,7 +1245,7 @@ export function FamilyForm({
                     <label>年齢:
                       <input
                         type="number"
-                        value={child.age}
+                        value={child.age || ''}
                         onChange={(e) => updateChild(idx, 'age', Number(e.target.value))}
                         className="input-xs"
                       />
@@ -1330,6 +1339,7 @@ export function AssetForm({ assets, setAssets }) {
             value={assets.initialSavings || ''}
             onChange={(e) => handleInitialChange(e.target.value)}
             className="input-premium"
+            onFocus={e => e.target.select()}
           />
           <span className="unit">万円</span>
         </div>
@@ -1424,7 +1434,7 @@ export function InsuranceForm({ insurance, setInsurance }) {
                 <div className="input-wrapper-sm">
                   <input
                     type="number"
-                    value={insurance[person].premium ?? ''}
+                    value={insurance[person].premium || ''}
                     onChange={(e) => updateInsurance(person, 'premium', e.target.value)}
                     className="input-sm" style={{ width: '100%' }}
                     placeholder="0"
@@ -1437,7 +1447,7 @@ export function InsuranceForm({ insurance, setInsurance }) {
                 <div className="input-wrapper-sm">
                   <input
                     type="number"
-                    value={insurance[person].benefitMonthly ?? ''}
+                    value={insurance[person].benefitMonthly || ''}
                     onChange={(e) => updateInsurance(person, 'benefitMonthly', e.target.value)}
                     className="input-sm" style={{ width: '100%' }}
                     placeholder="0"
@@ -1512,7 +1522,7 @@ export function DeathSettingsForm({ deathSettings, setDeathSettings }) {
                 <div className="input-wrapper-sm">
                   <input
                     type="number"
-                    value={deathSettings[person].age ?? ''}
+                    value={deathSettings[person].age || ''}
                     onChange={(e) => updateDeath(person, 'age', e.target.value)}
                     className="input-sm" style={{ width: '100%', borderColor: '#fca5a5' }}
                     placeholder="60"
