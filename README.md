@@ -1,17 +1,48 @@
-# React + Vite
+# Life Simulation (ライフシミュレーション)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+これは、住宅ローン、税金、貯蓄、教育費など、生涯にわたる家計をシミュレーションするためのツールです。
+React と Vite で構築されており、詳細な条件設定に基づいて、将来の資産推移を可視化します。
 
-Currently, two official plugins are available:
+## 主な機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **住宅ローンシミュレーション**:
+  - 変動・固定金利設定
+  - 一般・ZEH・長期優良住宅などの建物タイプ別設定
+  - ペアローン対応
+  - 住宅ローン控除の自動計算
+- **収入・支出管理**:
+  - 世帯主・配偶者の収入（給与、ボーナス、退職金、年金）設定
+  - ライフステージごとの生活費設定
+  - 社会保険料、民間保険料の管理
+  - 産休・育休、時短勤務のシミュレーション
+- **教育費・子育て**:
+  - 子供の年齢と進学プラン（公立・私立）ごとの教育費計算
+  - 児童手当の計算
+  - 東京都の助成金などを考慮したオプション（018サポート等）
+- **資産運用**:
+  - 預貯金、積立NISAなどの資産推移シミュレーション
+- **データの保存**:
+  - 設定データのJSONエクスポート・インポート機能
 
-## React Compiler
+## 開発環境のセットアップ
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+このプロジェクトは [Vite](https://vitejs.dev/) + [React](https://react.dev/) で構築されています。
 
-## Expanding the ESLint configuration
+### 必要条件
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# life_simulation
+- Node.js (v18以上推奨)
+- npm
+
+### インストールと起動
+
+プロジェクトディレクトリで以下のコマンドを実行してください。
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発サーバーの起動
+npm run dev
+```
+
+起動後、ブラウザで `http://localhost:5173` にアクセスして利用します。
