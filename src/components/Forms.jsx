@@ -78,7 +78,7 @@ export function MortgageForm({
 
     setInitialExpenses(prev => {
       const current = prev || [];
-      const index = current.findIndex(e => e.name === '仲介手数料');
+      const index = current.findIndex(e => e.name === '仲介手数料 (物件価格×3%+6万)');
 
       if (index >= 0) {
         // Only update if value matches "close enough" to avoid overwrite loop? 
@@ -92,7 +92,7 @@ export function MortgageForm({
         return next;
       } else {
         // Create new entry
-        return [...current, { id: Date.now(), name: '仲介手数料', amount: feeRounded }];
+        return [...current, { id: Date.now(), name: '仲介手数料 (物件価格×3%+6万)', amount: feeRounded }];
       }
     });
   }, [property?.landPrice, property?.buildingPrice, setInitialExpenses]);

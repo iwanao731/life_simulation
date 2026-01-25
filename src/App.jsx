@@ -51,7 +51,7 @@ function App() {
 
   // Initial One-time Expenses (Man-yen)
   const [initialExpenses, setInitialExpenses] = useState([
-    { id: 1, name: "仲介手数料", amount: 0 },
+    { id: 1, name: "仲介手数料 (物件価格×3%+6万)", amount: 0 },
     { id: 2, name: "登記・ローン関連諸費用", amount: 100 },
     { id: 3, name: "引越し費用", amount: 20 },
     { id: 4, name: "家具・家電・インテリア", amount: 100 },
