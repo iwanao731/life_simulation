@@ -6,14 +6,15 @@ import {
     PointElement,
     LineElement,
     BarElement,
+    BarController,
+    LineController,
     Title,
     Tooltip,
     Legend,
     Filler
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import { Bot, CheckCircle, AlertTriangle, X } from 'lucide-react';
-import { AiPlannerModal } from './AiPlannerModal';
+
 import { TrendingUp, Wallet, ArrowDownCircle } from 'lucide-react';
 
 ChartJS.register(
@@ -22,6 +23,8 @@ ChartJS.register(
     PointElement,
     LineElement,
     BarElement,
+    BarController,
+    LineController,
     Title,
     Tooltip,
     Legend,
@@ -47,7 +50,7 @@ export function Dashboard({
     incomeConfig,
     assetsConfig
 }) {
-    const [showAi, setShowAi] = useState(false);
+
 
 
     const chartData = useMemo(() => {
@@ -235,24 +238,6 @@ export function Dashboard({
     return (
         <div className="dashboard-container">
             <div className="summary-cards">
-                {/* AI Button Section */}
-                <div className="summary-card" style={{
-                    cursor: 'pointer',
-                    background: 'var(--color-primary-bg)',
-                    border: '1px solid var(--color-primary)'
-                }} onClick={() => setShowAi(true)}>
-                    <div className="summary-icon" style={{ color: 'var(--color-primary)', margin: 0 }}><Bot /></div>
-                    <div className="summary-content">
-                        <h3>AI診断</h3>
-                        <p className="summary-value" style={{ fontSize: '1.2rem', color: 'var(--color-primary)' }}>
-                            家計診断を実行
-                        </p>
-                        <p className="summary-sub">
-                            フィードバックを確認
-                        </p>
-                    </div>
-                </div>
-
                 <div className="summary-card">
                     <div className="summary-icon"><Wallet /></div>
                     <div className="summary-content">
@@ -316,44 +301,6 @@ export function Dashboard({
                 </div>
             </div>
 
-            {/* AI Feedback Modal */}
-            {showAi && (
-                <AiPlannerModal
-                    onClose={() => setShowAi(false)}
-                    simulationData={{
-                        mortgage: {
-                            totalLoan: mortgageData[0]?.remainingPrincipal + (mortgageData[0]?.principalPaid || 0),
-                            months: mortgageData.length * 12,
-                            isPairLoan: isPairLoan,
-                            loanAmount: loanAmount,
-                            bonusPrincipal: bonusPrincipal,
-                            rates: rates
-                        },
-                        family: {
-                            childCount: childCount
-                        },
-                        assets: {
-                            initialSavings: assetData?.cashAssets[0] / 10000 || 0, // Approx
-                            config: assetsConfig
-                        },
-                        expenses: {
-                            list: expensesList,
-                            baseMonthly: baseLivingCost
-                        },
-                        income: {
-                            config: incomeConfig
-                        },
-                        analysis: {
-                            hasNegativeCash: (assetData?.cashAssets || []).some(v => v < 0),
-                            finalBalance: (assetData?.totalAssets || []).slice(-1)[0] || 0,
-                            peakBalance: Math.max(...(assetData?.totalAssets || [0])),
-                            minBalance: Math.min(...(assetData?.totalAssets || [0])),
-                            totalIncome: (incomeSchedule || []).reduce((a, b) => a + (b.total || 0), 0),
-                            totalExpense: (mortgageData || []).reduce((a, b) => a + b.annualPayment, 0) + (educationData || []).reduce((a, b) => a + b, 0) + (baseLivingCost * 12 * 35)
-                        }
-                    }}
-                />
-            )}
         </div>
     );
 }
