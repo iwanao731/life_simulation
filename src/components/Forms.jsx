@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CreditCard, TrendingUp, DollarSign, Wallet, Plus, X } from 'lucide-react';
 import { estimateNetIncome, calculatePensionEstimate } from '../lib/simulation';
 
@@ -62,6 +62,40 @@ export function MortgageForm({
   };
 
   const totalInitialCost = (initialExpenses || []).reduce((sum, e) => sum + e.amount, 0);
+
+  // Auto-calculate Brokerage Fee
+  useEffect(() => {
+    const land = property?.landPrice || 0;
+    const building = property?.buildingPrice || 0;
+    const price = land + building;
+
+    if (price <= 0) return;
+
+    // Formula: (Price * 3% + 60,000yen) * Tax
+    // Units are in Man-yen. 60,000yen = 6 man-yen.
+    const fee = ((price * 0.03) + 6) * 1.1;
+    const feeRounded = Math.round(fee * 10) / 10; // Round to 1 decimal
+
+    setInitialExpenses(prev => {
+      const current = prev || [];
+      const index = current.findIndex(e => e.name === '仲介手数料');
+
+      if (index >= 0) {
+        // Only update if value matches "close enough" to avoid overwrite loop? 
+        // Or strictly update? User asked for "default". 
+        // If we strictly update, user can't edit it unless they change name.
+        // Let's check if the amount is already same.
+        if (Math.abs(current[index].amount - feeRounded) < 0.1) return prev;
+
+        const next = [...current];
+        next[index] = { ...next[index], amount: feeRounded };
+        return next;
+      } else {
+        // Create new entry
+        return [...current, { id: Date.now(), name: '仲介手数料', amount: feeRounded }];
+      }
+    });
+  }, [property?.landPrice, property?.buildingPrice, setInitialExpenses]);
 
   const periods = [
     '1-5年', '6-10年', '11-15年', '16-20年', '21-25年', '26-30年', '31-35年'
