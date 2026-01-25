@@ -15,7 +15,7 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 
-import { TrendingUp, Wallet, ArrowDownCircle } from 'lucide-react';
+import { TrendingUp, Wallet, ArrowDownCircle, CheckCircle } from 'lucide-react';
 
 ChartJS.register(
     CategoryScale,
